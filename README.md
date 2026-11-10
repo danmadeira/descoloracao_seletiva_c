@@ -4,6 +4,9 @@ Ferramenta de linha de comando desenvolvida em linguagem C para **descoloração
 
 O programa analisa cada pixel da imagem de entrada e preserva as cores originais apenas dos pixels cujas componentes de **Matiz (H)**, **Saturação (S)** e **Luminosidade (L)** estejam dentro dos intervalos definidos pelo usuário. Todos os demais pixels fora do intervalo selecionado são convertidos para tons de cinza de acordo com a equação de luminância relativa padrão (ITU-R BT.709).
 
+![Representação cilíndrica do HSL](img/HSL_color_solid_cylinder.png)
+&copy; [SharkD, CC BY-SA 3.0, via Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png)
+
 ---
 
 ## Sumário
@@ -29,16 +32,19 @@ Para cada pixel da imagem, as componentes $`R, G, B \in [0, 255]`$ são normaliz
 
 $`r = \frac{R}{255}, \quad g = \frac{G}{255}, \quad b = \frac{B}{255}`$
 
-Sejam $`M = \max(r, g, b)`$, $`m = \min(r, g, b)$ e $C = M - m`$:
+Sejam $`M = \max(r, g, b)`$, $`m = \min(r, g, b)`$ e $`C = M - m`$:
 
 1. **Luminosidade (L)**:
-   $`L = \frac{M + m}{2} \times 100 \quad \in [0, 100]`$
+
+$`L = \frac{M + m}{2} \times 100 \quad \in [0, 100]`$
 
 2. **Saturação (S)**:
-   $`S = \begin{cases} 0, & \text{se } C = 0 \\ \frac{C}{M + m} \times 100, & \text{se } L < 50\% \\ \frac{C}{2 - M - m} \times 100, & \text{se } L \ge 50\% \end{cases} \quad \in [0, 100]`$
+
+$`S = \begin{cases} 0, & \text{se } C = 0 \\ \frac{C}{M + m} \times 100, & \text{se } L < 50\% \\ \frac{C}{2 - M - m} \times 100, & \text{se } L \ge 50\% \end{cases} \quad \in [0, 100]`$
 
 3. **Matiz (H)**:
-   $`H = \begin{cases} 0^\circ, & \text{se } C = 0 \\ 60^\circ \times \left(\frac{g - b}{C}\right) \bmod 360^\circ, & \text{se } M = r \\ 60^\circ \times \left(\frac{b - r}{C} + 2\right), & \text{se } M = g \\ 60^\circ \times \left(\frac{r - g}{C} + 4\right), & \text{se } M = b \end{cases} \quad \in [0, 360]`$
+
+$`H = \begin{cases} 0^\circ, & \text{se } C = 0 \\ 60^\circ \times \left(\frac{g - b}{C}\right) \bmod 360^\circ, & \text{se } M = r \\ 60^\circ \times \left(\frac{b - r}{C} + 2\right), & \text{se } M = g \\ 60^\circ \times \left(\frac{r - g}{C} + 4\right), & \text{se } M = b \end{cases} \quad \in [0, 360]`$
 
 ### Seleção de Intervalos e Circularidade da Matiz
 
@@ -145,7 +151,7 @@ Os parâmetros podem ser informados em **qualquer ordem** na linha de comando, r
 
 ## Exemplos de Uso
 
-### 1. Destacando apenas tons de azul em uma imagem PNG
+### 1. Destacando apenas tons de azul em uma imagem JPG
 
 Mantém coloridos os pixels com matiz entre `200°` e `260°`, saturação entre `15%` e `100%` e luminosidade entre `10%` e `90%`:
 
